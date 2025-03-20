@@ -72,7 +72,7 @@ export const Keyboard = ({
           size={size}
           variant={variant}
           key={btn.value}
-          onClick={() => handleClick(btn.value)}
+          onClick={() => handleClick(btn.text)}
           disabled={btn.disabled}
         >
           {btn.text}
@@ -82,7 +82,7 @@ export const Keyboard = ({
         <Button
           size={size}
           variant={variant}
-          onClick={() => handleClick("space")}
+          onClick={() => handleClick("Space")}
           block={true}
         >
           Space
@@ -92,7 +92,7 @@ export const Keyboard = ({
         <Button
           size={size}
           variant={variant}
-          onClick={() => handleClick("erase")}
+          onClick={() => handleClick("Erase")}
           block={true}
         >
           Erase
