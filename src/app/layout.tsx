@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
+// shoelace css
+import "@shoelace-style/shoelace/dist/themes/light.css";
+import ShoelaceSetup from "@/components/shoelace-setup";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -27,7 +31,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <ShoelaceSetup>{children}</ShoelaceSetup>
       </body>
     </html>
   );

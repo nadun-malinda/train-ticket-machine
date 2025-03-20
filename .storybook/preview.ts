@@ -1,11 +1,14 @@
-import type { Preview } from '@storybook/react'
+import type { Preview } from "@storybook/react";
+
+// shoelace css
+import "@shoelace-style/shoelace/dist/themes/light.css";
 
 const preview: Preview = {
   parameters: {
     controls: {
       matchers: {
-       color: /(background|color)$/i,
-       date: /Date$/i,
+        color: /(background|color)$/i,
+        date: /Date$/i,
       },
     },
   },
