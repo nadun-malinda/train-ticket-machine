@@ -2,6 +2,9 @@
 
 import { Button } from "@/components/button/button";
 
+/**
+ * Keyboard component props
+ */
 interface KeyboardProps {
   /** Optional click handler */
   onClick?: (value: string) => void;

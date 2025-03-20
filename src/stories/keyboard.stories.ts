@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Keyboard } from "@/components/keyboard";
+import { Keyboard } from "@/components/keyboard/keyboard";
 import { fn } from "@storybook/test";
 
 const ActionsData = {
