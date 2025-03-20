@@ -1,5 +1,8 @@
 import type { Preview } from "@storybook/react";
 
+// global tailwind css
+import "@/app/globals.css";
+
 // shoelace css
 import "@shoelace-style/shoelace/dist/themes/light.css";
 
