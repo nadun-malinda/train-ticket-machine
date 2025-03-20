@@ -22,7 +22,7 @@ type Story = StoryObj<typeof Button>;
 export const Default: Story = {
   args: {
     children: "A",
-    variant: "primary",
+    variant: "default",
     size: "medium",
     disabled: false,
   },
@@ -31,7 +31,7 @@ export const Default: Story = {
 export const Small: Story = {
   args: {
     children: "A",
-    variant: "primary",
+    variant: "default",
     size: "small",
     disabled: false,
   },
@@ -40,7 +40,7 @@ export const Small: Story = {
 export const Medium: Story = {
   args: {
     children: "A",
-    variant: "primary",
+    variant: "default",
     size: "medium",
     disabled: false,
   },
@@ -50,7 +50,7 @@ export const Large: Story = {
   args: {
     children: "A",
     size: "large",
-    variant: "primary",
+    variant: "default",
     disabled: false,
   },
 };
@@ -58,7 +58,7 @@ export const Large: Story = {
 export const Block: Story = {
   args: {
     children: "A",
-    variant: "primary",
+    variant: "default",
     disabled: false,
     block: true,
   },
