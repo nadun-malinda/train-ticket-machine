@@ -5,6 +5,10 @@ import { Keyboard } from "./keyboard/keyboard";
 import { Station } from "@/types/station";
 import { filterStations } from "@/utils/station";
 import { StationList } from "./station-list";
+import { Tabs } from "./tabs/tabs";
+import { Tab } from "./tabs/tab";
+import { TabPanel } from "./tabs/tab-panel";
+import { Icon } from "./icon/icon";
 
 interface KeyboardInputProps {
   stations: Station[];
@@ -26,17 +30,27 @@ export function KeyboardInput({ stations }: KeyboardInputProps) {
     <div className="grid grid-cols-2 gap-4">
       <div>
         <p className="text-xl font-medium mb-4">User input: {text}</p>
-        <Keyboard onClick={handleClick} />
+        <Keyboard size="large" onClick={handleClick} />
       </div>
       <div>
         <div>
-          <p className="text-xl font-medium mb-4">
-            Stations{" "}
-            <span className="text-sm ml-2">
-              ({filteredStations.length} found)
-            </span>
-          </p>
-          <StationList stations={filteredStations} />
+          <Tabs>
+            <Tab panel="stations">Stations</Tab>
+            <Tab panel="resent">Resent search</Tab>
+
+            <TabPanel name="stations">
+              <StationList stations={filteredStations} />
+            </TabPanel>
+            <TabPanel name="resent">
+              <div className="text-center py-8">
+                <Icon
+                  name="clock"
+                  className="mx-auto h-12 w-12 text-gray-400 mb-4"
+                />
+                <p className="text-gray-500">No recent searches yet</p>
+              </div>
+            </TabPanel>
+          </Tabs>
         </div>
       </div>
     </div>
