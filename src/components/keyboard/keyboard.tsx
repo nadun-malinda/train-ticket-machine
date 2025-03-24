@@ -7,11 +7,9 @@ import { Button } from "@/components/button/button";
  */
 interface KeyboardProps {
   /** Optional click handler */
-  onClick?: (value: string) => void;
+  onKeyPress?: (value: string) => void;
 
-  /**
-   * The variant of the button
-   */
+  /** The variant of the button */
   variant?:
     | "default"
     | "primary"
@@ -23,81 +21,90 @@ interface KeyboardProps {
 
   /** How large should the button be? */
   size?: "small" | "medium" | "large";
+
+  /** Array of keys that are valid */
+  validKeys?: string[];
 }
 
+const keyboardKeys = [
+  { value: "a", text: "A" },
+  { value: "b", text: "B" },
+  { value: "c", text: "C" },
+  { value: "d", text: "D" },
+  { value: "e", text: "E" },
+  { value: "f", text: "F" },
+  { value: "g", text: "G" },
+  { value: "h", text: "H" },
+  { value: "i", text: "I" },
+  { value: "j", text: "J" },
+  { value: "k", text: "K" },
+  { value: "l", text: "L" },
+  { value: "m", text: "M" },
+  { value: "n", text: "N" },
+  { value: "o", text: "O" },
+  { value: "p", text: "P" },
+  { value: "q", text: "Q" },
+  { value: "r", text: "R" },
+  { value: "s", text: "S" },
+  { value: "t", text: "T" },
+  { value: "u", text: "U" },
+  { value: "v", text: "V" },
+  { value: "w", text: "W" },
+  { value: "x", text: "X" },
+  { value: "y", text: "Y" },
+  { value: "z", text: "Z" },
+  { value: "space", text: "Space" },
+  { value: "erase", text: "Erase" },
+  { value: "&", text: "&" },
+  { value: "(", text: "(" },
+  { value: ")", text: ")" },
+  { value: "-", text: "-" },
+];
+export const initialValidKeys = keyboardKeys.map((btn) => btn.text);
+
 export const Keyboard = ({
-  onClick,
+  onKeyPress,
   variant = "default",
   size = "medium",
+  validKeys = initialValidKeys,
 }: KeyboardProps) => {
-  const handleClick = (value: string) => {
-    if (onClick) {
-      onClick(value);
+  const handleKeyPress = (value: string) => {
+    if (onKeyPress) {
+      onKeyPress(value);
     }
   };
 
-  const buttons = [
-    { value: "a", text: "A", disabled: false },
-    { value: "b", text: "B", disabled: false },
-    { value: "c", text: "C", disabled: false },
-    { value: "d", text: "D", disabled: true },
-    { value: "e", text: "E", disabled: false },
-    { value: "f", text: "F", disabled: false },
-    { value: "g", text: "G", disabled: false },
-    { value: "h", text: "H", disabled: false },
-    { value: "i", text: "I", disabled: false },
-    { value: "j", text: "J", disabled: false },
-    { value: "k", text: "K", disabled: false },
-    { value: "l", text: "L", disabled: true },
-    { value: "m", text: "M", disabled: false },
-    { value: "n", text: "N", disabled: false },
-    { value: "o", text: "O", disabled: false },
-    { value: "p", text: "P", disabled: false },
-    { value: "q", text: "Q", disabled: false },
-    { value: "r", text: "R", disabled: false },
-    { value: "s", text: "S", disabled: false },
-    { value: "t", text: "T", disabled: false },
-    { value: "u", text: "U", disabled: false },
-    { value: "v", text: "V", disabled: false },
-    { value: "w", text: "W", disabled: false },
-    { value: "x", text: "X", disabled: false },
-    { value: "y", text: "Y", disabled: false },
-    { value: "z", text: "Z", disabled: false },
-  ];
-
   return (
     <div className="grid grid-cols-8 gap-1">
-      {buttons.map((btn) => (
-        <Button
-          size={size}
-          variant={variant}
-          key={btn.value}
-          onClick={() => handleClick(btn.text)}
-          disabled={btn.disabled}
-        >
-          {btn.text}
-        </Button>
-      ))}
-      <div className="col-span-4 start-3 end-6">
-        <Button
-          size={size}
-          variant={variant}
-          onClick={() => handleClick("Space")}
-          block={true}
-        >
-          Space
-        </Button>
-      </div>
-      <div className="col-span-2">
-        <Button
-          size={size}
-          variant={variant}
-          onClick={() => handleClick("Erase")}
-          block={true}
-        >
-          Erase
-        </Button>
-      </div>
+      {keyboardKeys.map((btn) => {
+        const isEraseKey = btn.text === "Erase";
+        const isSpaceKey = btn.text === "Space";
+
+        const isKeyEnabled =
+          isEraseKey ||
+          (isSpaceKey
+            ? validKeys.length > 0 && validKeys.includes(" ")
+            : validKeys.includes(btn.text));
+
+        return (
+          <div
+            key={btn.value}
+            className={`${isSpaceKey ? "col-span-4 start-3 end-6" : ""} ${
+              isEraseKey ? "col-span-2" : ""
+            }`}
+          >
+            <Button
+              size={size}
+              variant={variant}
+              onClick={() => handleKeyPress(btn.text)}
+              disabled={!isKeyEnabled}
+              block
+            >
+              {btn.text}
+            </Button>
+          </div>
+        );
+      })}
     </div>
   );
 };

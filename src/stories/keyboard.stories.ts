@@ -3,7 +3,7 @@ import { Keyboard } from "@/components/keyboard/keyboard";
 import { fn } from "@storybook/test";
 
 const ActionsData = {
-  onClick: fn(),
+  onKeyPress: fn(),
 };
 
 const meta: Meta<typeof Keyboard> = {
@@ -44,5 +44,13 @@ export const Large: Story = {
   args: {
     size: "large",
     variant: "default",
+  },
+};
+
+export const WithValidKeys: Story = {
+  args: {
+    size: "large",
+    variant: "default",
+    validKeys: ["A", "B", "C", "D"],
   },
 };
