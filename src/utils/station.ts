@@ -1,17 +1,34 @@
 import { Station } from "@/types/station";
 
 /**
+ * Normalize station names to uppercase
+ * @param station The station object
+ * @returns A new station object with the station name in uppercase
+ */
+function normalizeStationName(station: Station): Station {
+  return {
+    ...station,
+    stationName: station.stationName.toUpperCase(),
+  };
+}
+
+/**
  * Given a search query and an array of stations, filters stations that start with the query
  * @param query The search query
  * @param stations Array of station objects
- * @returns Filtered array of stations
+ * @returns Filtered array of stations with station names normalized
  */
 export function filterStations(query: string, stations: Station[]): Station[] {
-  if (!query) return stations;
+  // Normalize station names upfront to avoid repeating it
+  const normalizedStations = stations.map(normalizeStationName);
+
+  if (!query) {
+    return normalizedStations;
+  }
 
   const normalizedQuery = query.trim().toUpperCase();
-  return stations.filter((station) =>
-    station.stationName.toUpperCase().startsWith(normalizedQuery)
+  return normalizedStations.filter((station) =>
+    station.stationName.startsWith(normalizedQuery)
   );
 }
 
@@ -25,18 +42,19 @@ export function getNextValidCharacters(
   query: string,
   stations: Station[]
 ): string[] {
-  if (!stations.length) return [];
+  // Trim and calculate query length once
+  const queryLength = query.trimStart().length;
+  const nextChars = new Set<string>();
 
-  const queryLength = query.trim().length;
+  stations.forEach((station) => {
+    const stationName = station.stationName;
 
-  // Extract all possible next characters from matching stations
-  const nextChars = stations.map((station) => {
-    const stationName = station.stationName.toUpperCase();
-    return queryLength < stationName.length ? stationName[queryLength] : null;
+    // Only process if queryLength is less than the station name's length
+    if (queryLength < stationName.length) {
+      nextChars.add(stationName[queryLength]);
+    }
   });
 
-  // Remove nulls and deduplicate
-  return Array.from(
-    new Set(nextChars.filter((char) => char !== null))
-  ) as string[];
+  // Return the deduplicated characters as an array
+  return Array.from(nextChars);
 }
