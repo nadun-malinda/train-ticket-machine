@@ -9,6 +9,7 @@ import { Tabs } from "./tabs/tabs";
 import { Tab } from "./tabs/tab";
 import { TabPanel } from "./tabs/tab-panel";
 import { Icon } from "./icon/icon";
+import { BlinkingCursorText } from "./blink-cursor-text";
 
 interface KeyboardInputProps {
   stations: Station[];
@@ -30,7 +31,7 @@ export function KeyboardInput({ stations }: KeyboardInputProps) {
   return (
     <div className="grid grid-cols-2 gap-8 w-full">
       <div>
-        <p className="text-xl font-medium mb-4">User input: {text}</p>
+        <BlinkingCursorText text={text} />
         <Keyboard
           size="large"
           onKeyPress={handleClick}
