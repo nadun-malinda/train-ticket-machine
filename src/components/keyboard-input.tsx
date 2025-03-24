@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Keyboard } from "./keyboard/keyboard";
 import { Station } from "@/types/station";
-import { filterStations } from "@/utils/station";
+import { filterStations, getNextValidCharacters } from "@/utils/station";
 import { StationList } from "./station-list";
 import { Tabs } from "./tabs/tabs";
 import { Tab } from "./tabs/tab";
@@ -17,6 +17,7 @@ interface KeyboardInputProps {
 export function KeyboardInput({ stations }: KeyboardInputProps) {
   const [text, setText] = useState("");
   const filteredStations = filterStations(text, stations);
+  const nextValidChar = getNextValidCharacters(text, filteredStations);
 
   const handleClick = (key: string) => {
     setText((prev) => {
@@ -27,10 +28,14 @@ export function KeyboardInput({ stations }: KeyboardInputProps) {
   };
 
   return (
-    <div className="grid grid-cols-2 gap-4">
+    <div className="grid grid-cols-2 gap-8 w-full">
       <div>
         <p className="text-xl font-medium mb-4">User input: {text}</p>
-        <Keyboard size="large" onClick={handleClick} />
+        <Keyboard
+          size="large"
+          onKeyPress={handleClick}
+          validKeys={nextValidChar}
+        />
       </div>
       <div>
         <div>
